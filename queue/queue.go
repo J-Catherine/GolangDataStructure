@@ -1,4 +1,4 @@
-package DataStruct
+package queue
 
 import "fmt"
 
