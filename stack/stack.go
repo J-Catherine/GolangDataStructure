@@ -4,7 +4,6 @@ import "fmt"
 
 type Stack struct {
 	data []int
-	top int
 	size int
 	maxLen int
 }
@@ -14,7 +13,7 @@ func NewStack(len int)  *Stack{
 		fmt.Println("New a stack failure!! Len is an illegal input! ")
 		return nil
 	}
-	s := &Stack{make([]int,len),-1,0,len}
+	s := &Stack{make([]int,len),0,len}
 	for i:= 0; i<len; i++{
 		s.data[i] = -1e10
 	}
@@ -25,8 +24,7 @@ func (s *Stack) Push(value int) {
 	if s.size >= s.maxLen{
 		fmt.Println("Push failure!! Stack is full!!")
 	} else{
-		s.top += 1
-		s.data[s.top] = value
+		s.data[s.size] = value
 		s.size+=1
 	}
 }
@@ -36,9 +34,8 @@ func (s *Stack) Pop() int{
 		fmt.Println("Pop failure!! Stack is empty!!")
 		return -1e10
 	} else {
-		tmp := s.data[s.top]
-		s.top -= 1
 		s.size -= 1
+		tmp := s.data[s.size]
 		return tmp
 	}
 }
@@ -60,6 +57,6 @@ func (s *Stack) Top() int {
 		fmt.Println("Get top failure!! Stack is empty!!")
 		return -1e10
 	} else {
-		return s.data[s.top]
+		return s.data[s.size-1]
 	}
 }

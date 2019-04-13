@@ -1,4 +1,4 @@
-package priorityQueue
+package queue
 
 import (
 	"fmt"
@@ -53,16 +53,13 @@ func (h *PriorityQueue) Pop() int {
 		h.size -= 1
 		h.data[0], h.data[h.size] = h.data[h.size], h.data[0]
 		for i, j := 0, 1; j < h.size; i, j = j, j*2+1 {
-			if h.data[i]*f < h.data[j] {
+			if j+1 < h.size && h.data[j]*f < h.data[j+1]*f {
+				j+= 1
+			}
+			if h.data[i]*f < h.data[j]*f {
 				h.data[i], h.data[j] = h.data[j], h.data[i]
 				continue
 			}
-			j += 1
-			if h.data[i]*f < h.data[j] {
-				h.data[i], h.data[j] = h.data[j], h.data[i]
-				continue
-			}
-			break
 		}
 	}
 	return h.data[h.size+1]
@@ -75,4 +72,16 @@ func (h *PriorityQueue) Top() int {
 		fmt.Println("Get max or min failure!! Heap is empty!!")
 		return -1e10
 	}
+}
+
+func (h *PriorityQueue) Empty() bool{
+	if h.size >0{
+		return false
+	} else {
+		return true
+	}
+}
+
+func (h *PriorityQueue) Size() int{
+	return h.size
 }

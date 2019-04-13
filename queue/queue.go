@@ -16,9 +16,6 @@ func NewQueue(len int) *Queue {
 		return nil
 	}
 	q := &Queue{make([]int, len), 0, 0, 0,len}
-	for i := 0; i< len; i++ {
-		q.data[i] = -1e10
-	}
 	return q
 }
 
@@ -32,17 +29,19 @@ func (q *Queue) Push(value int) {
 	}
 }
 
-func (q *Queue) Pop() {
+func (q *Queue) Pop() int{
 	if q.size > 0{
-		q.data[q.head] = -1e10
+		tmp := q.data[q.head]
 		q.size--
 		if q.size == 0{
 			q.head,q.end = 0,0
 		} else{
 			q.head++
 		}
+		return tmp
 	} else{
 		fmt.Println("Pop failure!! Queue is empty!!")
+		return -1e10
 	}
 }
 
