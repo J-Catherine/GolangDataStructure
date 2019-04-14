@@ -35,8 +35,8 @@ func TestQuickSort_Sample(t *testing.T) {
 
 func TestQuickSort_Large(t *testing.T) {
 	rand.Seed(time.Now().Unix())
-	origin := make(IntArr, 10000)
-	for i := 0; i != 10000; i++ {
+	origin := make(IntArr, 20000)
+	for i := 0; i != 20000; i++ {
 		origin[i] = rand.Int()
 	}
 	ans1 := origin
@@ -48,5 +48,26 @@ func TestQuickSort_Large(t *testing.T) {
 	for i := 0; i != origin.Len(); i++ {
 		myTest(t, ans1[i], ans2[i])
 		myTest(t, ans2[i], ans3[i])
+	}
+}
+
+
+func TestQuickSort_Corner(t *testing.T) {
+	M := 2000000
+	rand.Seed(time.Now().Unix())
+	origin := make(IntArr, M)
+	reverse := make(IntArr, M)
+	for i := 0; i != M; i++ {
+		origin[i] = i
+		reverse[i] = M-1-i
+	}
+	ans := origin
+	QuickSort(ans)
+	for i := 0; i != origin.Len(); i++ {
+		myTest(t, ans[i], origin[i])
+	}
+	QuickSort(reverse)
+	for i := 0; i != origin.Len(); i++ {
+		myTest(t, reverse[i], origin[i])
 	}
 }
