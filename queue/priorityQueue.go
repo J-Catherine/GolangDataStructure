@@ -31,13 +31,29 @@ func (h *PriorityQueue) Push(value int) {
 		now := h.size
 		h.data[now] = value
 		h.size += 1
-		for i, j := now, int((now-1)/2); j >= 0; i, j = j, int((j-1)/2) {
-			if f*h.data[i] > f*h.data[j] {
-				h.data[i], h.data[j] = h.data[j], h.data[i]
-			} else {
-				break
-			}
+		h.up(now,f)
+	}
+}
+
+func (h *PriorityQueue) up(i, f int) {
+	for j := int((i-1)/2); j >= 0; i, j = j, int((j-1)/2) {
+		if f*h.data[i] > f*h.data[j] {
+			h.data[i], h.data[j] = h.data[j], h.data[i]
+		} else {
+			break
 		}
+	}
+}
+
+func (h *PriorityQueue) down(i int, f int) {
+	for i, j := 0, 1; j < h.size; i, j = j, j*2+1 {
+		if j+1 < h.size && h.data[j]*f < h.data[j+1]*f {
+			j+= 1
+		}
+		if h.data[i]*f < h.data[j]*f {
+			h.data[i], h.data[j] = h.data[j], h.data[i]
+		}
+		break
 	}
 }
 
@@ -52,15 +68,7 @@ func (h *PriorityQueue) Pop() int {
 		}
 		h.size -= 1
 		h.data[0], h.data[h.size] = h.data[h.size], h.data[0]
-		for i, j := 0, 1; j < h.size; i, j = j, j*2+1 {
-			if j+1 < h.size && h.data[j]*f < h.data[j+1]*f {
-				j+= 1
-			}
-			if h.data[i]*f < h.data[j]*f {
-				h.data[i], h.data[j] = h.data[j], h.data[i]
-				continue
-			}
-		}
+		h.down(0,f)
 	}
 	return h.data[h.size+1]
 }

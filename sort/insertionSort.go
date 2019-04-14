@@ -5,6 +5,18 @@ type Link struct {
 	next []int  // 下标数组
 }
 
+func InsertionSort(nums Sortable)  {
+	length:=nums.Len()
+	for i:= 0; i<length-1; i++{
+		for j:=i+1; j>0; j-- {
+			if nums.Less(j,j-1){
+				nums.Swap(j,j-1)
+			} else {
+				break
+			}
+		}
+	}
+}
 
 // 更适合链表
 //func InsertionSort(nums Sortable)  {

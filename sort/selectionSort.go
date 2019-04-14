@@ -6,7 +6,7 @@ func SelectionSort(nums Sortable)  {
 	for i:=0; i<length-1; i++ {
 		minIndex = i
 		for j:=i+1; j< length; j++{
-			if nums.Less(minIndex, j){
+			if nums.Less(j,minIndex){
 				minIndex = j
 			}
 		}
