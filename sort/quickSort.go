@@ -10,19 +10,17 @@ func QuickSort(nums Sortable)  {
 	length := nums.Len()
 	left,right := 0,length-1
 	rand.Seed(time.Now().Unix())
-	qs(nums,left,right)
+	partition(nums,left,right)
 
 }
 
-func qs(nums Sortable, left, right int)  {
-	if right <= left{
+func partition(nums Sortable, start, end int)  {
+	if end <= start{
 		return
 	}
-	end:=right
-	tmp := left + rand.Intn(right-left+1)
-	nums.Swap(left,tmp)
-	start := left
-	left+=1
+	tmp := start + rand.Intn(end-start+1)
+	nums.Swap(start,tmp)
+	left, right := start+1, end
 	for ; left < right; {
 		for ;left < right && !nums.Less(right,start); right-=1{}
 		for ;left < right && nums.Less(left,start); left+=1{}
@@ -33,8 +31,8 @@ func qs(nums Sortable, left, right int)  {
 	} else {
 		left -= 1
 	}
-	qs(nums,start,left-1)
-	qs(nums,left+1,end)
+	partition(nums,start,left-1)
+	partition(nums,left+1,end)
 
 }
 
